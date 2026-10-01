@@ -1,0 +1,392 @@
+/* ─────────────────────────────────────────────────────────────
+   Lonelackey character sheet
+   • Character sheets: add  cssclasses: [lonelackey-sheet]  to the note.
+   • Compendium notes: [!lk-ref] callouts are styled anywhere.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Colour tokens (light / dark) ───────────────────────────── */
+.theme-light {
+  --lk-banner-bg: #171614;
+  --lk-banner-fg: #f4efe4;
+  --lk-tile-bg: #f5f1e9;
+  --lk-tile-border: #dcd3c2;
+  --lk-accent: #a9661a;
+  --lk-accent-rgb: 169, 102, 26;
+  --lk-muted: #6e6658;
+}
+.theme-dark {
+  --lk-banner-bg: #e7dfcf;
+  --lk-banner-fg: #151412;
+  --lk-tile-bg: #1d1c1a;
+  --lk-tile-border: #36322b;
+  --lk-accent: #f0a940;
+  --lk-accent-rgb: 240, 169, 64;
+  --lk-muted: #9d9584;
+}
+body {
+  --lk-display: "Montserrat", var(--font-interface);
+  --lk-radius: 6px;
+}
+
+.lonelackey-sheet {
+  --list-marker-color: var(--lk-accent);
+  --link-color: var(--lk-accent);
+  --link-unresolved-color: var(--lk-accent);
+}
+
+/* ── Name plate ─────────────────────────────────────────────── */
+.lonelackey-sheet .inline-title { display: none; }
+
+.lonelackey-sheet h1,
+.lonelackey-sheet .HyperMD-header-1 {
+  font-family: var(--lk-display);
+  font-weight: 800;
+  font-size: 2.3em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  margin: 0.2em 0 0.1em;
+  padding-bottom: 0.15em;
+  border-bottom: 3px solid var(--lk-accent);
+}
+
+/* ── Any H2 you add to a sheet becomes a banner (both views) ── */
+.lonelackey-sheet h2,
+.markdown-source-view.mod-cm6.lonelackey-sheet .cm-line.HyperMD-header-2 {
+  font-family: var(--lk-display);
+  background: var(--lk-banner-bg);
+  color: var(--lk-banner-fg);
+  font-size: 0.85em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.45em 0.8em !important;
+  border-radius: var(--lk-radius);
+  margin-top: 1.4em;
+}
+.markdown-source-view.mod-cm6.lonelackey-sheet .HyperMD-header-2 .cm-header,
+.markdown-source-view.mod-cm6.lonelackey-sheet .HyperMD-header-2 .cm-formatting { color: var(--lk-banner-fg); }
+
+/* Properties panel: hidden in reading view (use the Build panel instead).
+   Delete this rule if you'd rather keep it visible. */
+.markdown-preview-view.lonelackey-sheet .metadata-container { display: none; }
+
+/* ── Callout base: every lk-* callout on a sheet + lk-ref anywhere ── */
+.lonelackey-sheet .callout[data-callout^="lk-"],
+.callout[data-callout="lk-ref"] {
+  --callout-color: var(--lk-accent-rgb);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 1em 0;
+}
+
+/* Title → dark banner */
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-title,
+.callout[data-callout="lk-ref"] > .callout-title {
+  background: var(--lk-banner-bg);
+  color: var(--lk-banner-fg);
+  font-family: var(--lk-display);
+  font-size: 0.78em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.45em 0.8em;
+  border-radius: var(--lk-radius) var(--lk-radius) 0 0;
+  gap: 0.55em;
+  align-items: center;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-title :is(.callout-icon, .callout-fold),
+.callout[data-callout="lk-ref"] > .callout-title .callout-icon { color: inherit; opacity: 0.85; }
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-title .callout-title-inner,
+.callout[data-callout="lk-ref"] > .callout-title .callout-title-inner { font-weight: 700; }
+.lonelackey-sheet .callout.is-collapsed[data-callout^="lk-"] > .callout-title { border-radius: var(--lk-radius); }
+
+/* Body → paper tile */
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-content,
+.callout[data-callout="lk-ref"] > .callout-content {
+  background: var(--lk-tile-bg);
+  border: 1px solid var(--lk-tile-border);
+  border-top: none;
+  border-radius: 0 0 var(--lk-radius) var(--lk-radius);
+  padding: 0.55em 0.95em;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-content > :first-child,
+.callout[data-callout="lk-ref"] > .callout-content > :first-child { margin-top: 0.25em; }
+.lonelackey-sheet .callout[data-callout^="lk-"] > .callout-content > :last-child,
+.callout[data-callout="lk-ref"] > .callout-content > :last-child { margin-bottom: 0.25em; }
+.lonelackey-sheet .callout[data-callout^="lk-"] ul { padding-inline-start: 1.2em; }
+
+/* Icons */
+.callout[data-callout="lk-ref"]                { --callout-icon: lucide-book-open; }
+.lonelackey-sheet .callout[data-callout="lk-build"]    { --callout-icon: lucide-sliders-horizontal; }
+.lonelackey-sheet .callout[data-callout="lk-class"]    { --callout-icon: lucide-shield; }
+.lonelackey-sheet .callout[data-callout="lk-attacks"]  { --callout-icon: lucide-sword; }
+.lonelackey-sheet .callout[data-callout="lk-gear"]     { --callout-icon: lucide-backpack; }
+.lonelackey-sheet .callout[data-callout="lk-coin"]     { --callout-icon: lucide-coins; }
+.lonelackey-sheet .callout[data-callout="lk-spells"]   { --callout-icon: lucide-sparkles; }
+.lonelackey-sheet .callout[data-callout="lk-talents"]  { --callout-icon: lucide-star; }
+.lonelackey-sheet .callout[data-callout="lk-allies"]   { --callout-icon: lucide-paw-print; }
+.lonelackey-sheet .callout[data-callout="lk-lore"]     { --callout-icon: lucide-languages; }
+.lonelackey-sheet .callout[data-callout="lk-log"]      { --callout-icon: lucide-scroll-text; }
+.lonelackey-sheet .callout[data-callout="lk-notes"]    { --callout-icon: lucide-pencil; }
+
+/* ── Layout callouts (no title, no box) ──────────────────────── */
+.lonelackey-sheet .callout:is([data-callout="lk-identity"], [data-callout="lk-vitals"],
+  [data-callout="lk-stats"], [data-callout="lk-grid"]) > .callout-title { display: none; }
+
+.lonelackey-sheet .callout:is([data-callout="lk-identity"], [data-callout="lk-vitals"],
+  [data-callout="lk-stats"], [data-callout="lk-grid"]) > .callout-content {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Identity strip */
+.lonelackey-sheet .callout[data-callout="lk-identity"] { margin-top: 0.2em; }
+.lonelackey-sheet .callout[data-callout="lk-identity"] > .callout-content {
+  color: var(--lk-muted);
+  font-family: var(--lk-display);
+  font-size: 1.02em;
+  letter-spacing: 0.03em;
+}
+.lonelackey-sheet .callout[data-callout="lk-identity"] > .callout-content > p:first-child {
+  color: var(--text-normal);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9em;
+}
+
+/* Two-column masonry of panels; one column on narrow panes */
+.lonelackey-sheet .callout[data-callout="lk-grid"] > .callout-content {
+  columns: 2 260px;
+  column-gap: 16px;
+}
+.lonelackey-sheet .callout[data-callout="lk-grid"] > .callout-content > .callout {
+  break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 16px;
+}
+
+/* ── Stat tiles (vitals + ability scores) ────────────────────── */
+.lonelackey-sheet .callout:is([data-callout="lk-vitals"], [data-callout="lk-stats"]) table {
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 8px 0;
+  margin: 0 -8px;
+  width: calc(100% + 16px);
+}
+.lonelackey-sheet .callout:is([data-callout="lk-vitals"], [data-callout="lk-stats"]) th {
+  background: var(--lk-banner-bg);
+  color: var(--lk-banner-fg);
+  border: none;
+  border-radius: var(--lk-radius) var(--lk-radius) 0 0;
+  font-family: var(--lk-display);
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-align: center;
+  padding: 0.45em 0.2em;
+}
+.lonelackey-sheet .callout:is([data-callout="lk-vitals"], [data-callout="lk-stats"]) td {
+  background: var(--lk-tile-bg);
+  border: 1px solid var(--lk-tile-border);
+  border-top: none;
+  border-radius: 0 0 var(--lk-radius) var(--lk-radius);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding: 0.45em 0.2em;
+}
+.lonelackey-sheet .callout[data-callout="lk-vitals"] td {
+  color: var(--lk-muted);
+  font-size: 0.95em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lonelackey-sheet .callout[data-callout="lk-vitals"] td:not(:has(input)) {
+  color: var(--text-normal);
+  font-family: var(--lk-display);
+  font-size: 1.5em;
+  font-weight: 800;
+}
+.lonelackey-sheet .callout[data-callout="lk-stats"] tbody tr:first-child td {
+  font-family: var(--lk-display);
+  font-size: 1.7em;
+  font-weight: 800;
+  border-bottom: none;
+  border-radius: 0;
+  padding-bottom: 0;
+}
+.lonelackey-sheet .callout[data-callout="lk-stats"] tbody tr:last-child td {
+  color: var(--lk-accent);
+  font-size: 0.9em;
+  font-weight: 700;
+  padding-top: 0.05em;
+}
+
+/* ── Meta Bind inputs ────────────────────────────────────────── */
+.lonelackey-sheet .mb-input-wrapper,
+.lonelackey-sheet .mb-input-inline {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.lonelackey-sheet .callout[data-callout^="lk-"] input[type="number"],
+.lonelackey-sheet .callout[data-callout^="lk-"] input[type="text"] {
+  height: auto;
+  padding: 0 0.25em;
+  border: none;
+  border-bottom: 2px solid rgba(var(--lk-accent-rgb), 0.55);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--lk-accent);
+  font: inherit;
+  font-weight: 700;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] input[type="number"] {
+  width: 3.2ch;
+  min-width: 2.4ch;
+  field-sizing: content;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] :is(input, textarea):focus {
+  border-bottom-color: var(--lk-accent);
+  outline: none;
+  box-shadow: none;
+}
+/* No spinners: click and type, or use ↑/↓ arrow keys */
+.lonelackey-sheet .callout[data-callout^="lk-"] input[type="number"]::-webkit-inner-spin-button,
+.lonelackey-sheet .callout[data-callout^="lk-"] input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.lonelackey-sheet .callout[data-callout="lk-vitals"] input[type="number"] {
+  width: 2.6ch;
+  min-width: 1.6ch;
+  padding: 0;
+  font-family: var(--lk-display);
+  font-size: 1.55em;
+  font-weight: 800;
+  vertical-align: baseline;
+}
+
+/* ── Build panel: labelled form grid ─────────────────────────── */
+.lonelackey-sheet .callout[data-callout="lk-build"] .callout-content ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.7em 1.4em;
+  list-style: none;
+  padding: 0.7em 0;
+  margin: 0;
+}
+.lonelackey-sheet .callout[data-callout="lk-build"] .callout-content ul + ul {
+  border-top: 1px dashed var(--lk-tile-border);
+}
+.lonelackey-sheet .callout[data-callout="lk-build"] li { margin: 0; }
+.lonelackey-sheet .callout[data-callout="lk-build"] li::marker { content: ""; }
+.lonelackey-sheet .callout[data-callout="lk-build"] li > .list-bullet,
+.lonelackey-sheet .callout[data-callout="lk-build"] li > .list-collapse-indicator { display: none; }
+.lonelackey-sheet .callout[data-callout="lk-build"] li > strong:first-child {
+  display: block;
+  margin-bottom: 0.2em;
+  color: var(--lk-muted);
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.lonelackey-sheet .callout[data-callout="lk-build"] input[type="text"] { width: 100%; }
+.lonelackey-sheet .callout[data-callout="lk-build"] input[type="number"] { width: 5ch; text-align: left; }
+
+/* ── Notes: full-width dark panel with a borderless writing area ── */
+.lonelackey-sheet .callout[data-callout="lk-notes"] > .callout-content { padding: 0.4em 0.95em 0.6em; }
+.lonelackey-sheet .callout[data-callout="lk-notes"] :is(.mb-input-wrapper, .mb-input, .mb-textarea-input) {
+  display: block;
+  width: 100%;
+}
+.lonelackey-sheet .callout[data-callout="lk-notes"] textarea {
+  display: block;
+  width: 100%;
+  min-height: 14em;
+  padding: 0.3em 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-normal);
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+}
+.lonelackey-sheet .callout[data-callout="lk-notes"] textarea::placeholder { color: var(--lk-muted); }
+
+/* ── Dataview tables & lists inside panels ───────────────────── */
+.lonelackey-sheet .callout[data-callout^="lk-"] table.table-view-table,
+.callout[data-callout="lk-ref"] table.table-view-table {
+  width: 100%;
+  margin: 0.3em 0;
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] table.table-view-table th {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--lk-tile-border);
+  color: var(--lk-muted);
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: left;
+  padding: 0.3em 0.45em;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] table.table-view-table td {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--lk-tile-border);
+  padding: 0.4em 0.45em;
+  vertical-align: top;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] table.table-view-table tr:last-child td { border-bottom: none; }
+.lonelackey-sheet .callout[data-callout^="lk-"] ul.list-view-ul { margin: 0.2em 0; }
+.lonelackey-sheet .callout[data-callout^="lk-"] ul.list-view-ul li { margin-bottom: 0.35em; }
+
+/* Empty queries read as a quiet hint, not an error box */
+.lonelackey-sheet .callout[data-callout^="lk-"] .dataview-error-box {
+  min-height: 0;
+  padding: 0.2em 0;
+  border: none;
+  background: transparent;
+}
+.lonelackey-sheet .callout[data-callout^="lk-"] .dataview-error-message {
+  margin: 0;
+  color: var(--lk-muted);
+  font-size: 0.9em;
+  font-style: italic;
+  text-align: left;
+}
+
+/* ── Phone widths ────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .lonelackey-sheet h1, .lonelackey-sheet .HyperMD-header-1 { font-size: 1.8em; }
+  .lonelackey-sheet .callout:is([data-callout="lk-vitals"], [data-callout="lk-stats"]) table {
+    border-spacing: 4px 0;
+    margin: 0 -4px;
+    width: calc(100% + 8px);
+  }
+  .lonelackey-sheet .callout:is([data-callout="lk-vitals"], [data-callout="lk-stats"]) th { letter-spacing: 0.06em; font-size: 0.65em; }
+  .lonelackey-sheet .callout[data-callout="lk-stats"] tbody tr:first-child td { font-size: 1.35em; }
+  .lonelackey-sheet .callout[data-callout="lk-vitals"] td { white-space: normal; font-size: 0.8em; }
+  .lonelackey-sheet .callout[data-callout="lk-vitals"] td:not(:has(input)) { font-size: 1.25em; }
+  .lonelackey-sheet .callout[data-callout="lk-vitals"] input[type="number"] { font-size: 1.25em; }
+  .lonelackey-sheet .callout[data-callout="lk-build"] .callout-content ul { grid-template-columns: repeat(2, 1fr); }
+}

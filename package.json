@@ -1,0 +1,30 @@
+{
+  "name": "lonelackey",
+  "version": "1.0.0",
+  "description": "Obsidian plugin that keeps character sheets in step with Lonelog tags in your session notes, plus a starter vault for solo TTRPG journaling.",
+  "license": "MIT",
+  "author": "GnomeLackey",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "npm run typecheck && npm run lint && node esbuild.config.mjs --production",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.2",
+    "builtin-modules": "^5.3.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "obsidian": "^1.13.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "lonelackey",
+  "name": "Lonelackey",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Keeps character sheets in step with Lonelog PC, inventory and wealth tags in your session notes, and scaffolds a starter vault for solo TTRPG journaling.",
+  "author": "GnomeLackey",
+  "isDesktopOnly": false
+}
